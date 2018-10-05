@@ -60,11 +60,12 @@ hello_world:
 To assemble it, just launch `jrasm` with the source file name.
 
 ```
-$ jrasm helloworld.asm
+> jrasm helloworld.asm
 ```
 
-This creates a CJR file named `helloworld.cjr`. You can load the CJR file to JR-200 emulator or
-convert it into a WAV file that is fed to a real machine through a cassette recorder interface.
+This creates a CJR file named `helloworld.cjr`. You can load the CJR file to
+[JR-200 emulator](http://www.geocities.jp/find_jr200/vjr200.html)
+or convert it into a WAV file that is fed to a real machine through a cassette recorder interface.
 
 After loading it, you can call the program using JR-200 BASIC like follows:
 
@@ -78,7 +79,7 @@ Specifying `-D` options prints the produced binary data with corresponding assem
 to the standard output.
 
 ```
-$ jrasm -D helloworld.asm
+> jrasm -D helloworld.asm
 ```
 
 The result is:
@@ -432,7 +433,7 @@ Since the code in a macro is implicitly surrounded by `.SCOPE`, any labels that 
 
 
 ```
-.PCGPAGE symbol,[USER|CRAM],start-of-character-code
+.PCGPAGE symbol,[USER|CRAM],start_of_character_code
 ```
 
 ```
