@@ -1,34 +1,32 @@
 ---
 layout: basement
 ---
-# jrasm - Assembler for JR-200 
+<div class="jumbotron">
+  <div class="container-fluid">
+	<h1 class="display-4">jrasm - Assembler for JR-200
+	  <span class="float-right">
+		<a class="btn btn-secondary" href="https://github.com/ypsitau/jrasm/releases/download/v0.1.1/jrasm-0.1.1.zip">
+		  <i class="fas fa-download mr-2"></i>Download
+		</a>
+		<a class="btn btn-secondary" href="https://github.com/ypsitau/jrasm">
+		  <i class="fab fa-github mr-2"></i>View on GitHub
+		</a>
+	  </span>
+	</h1>
+	<p class="lead">
+	An assembler of Motorola 6800 MPU that features some functions useful to develop
+	programs for JR-200, a micro computer made by Panasonic in 1983.
+	</p>
+  </div>
+</div>
 
-This is an assembler of Motorola 6800 MPU that features some functions useful to develop
-programs for JR-200, a micro computer made by Panasonic in 1983.
 
+## Installation
 
-## Build for Windows
+A Windows executable is available [here](https://github.com/ypsitau/jrasm/releases/download/v0.1.1/jrasm-0.1.1.zip).
+Expand it in a directory that is included in `PATH` environment variable.
 
-Open the solution file `jrasm.sln` with Visual Studio 2017 and build it.
-The executable `jrasm.exe` will be produced in the following directories
-according to the selected configuration:
-
-- `x64\Release` ... 64-bit executable for release.
-- `x64\Debug` ... 64-bit executable for debug purpose.
-- `x86\Release` ... 32-bit executable for release.
-- `x86\Debug` ... 32-bit executable for debug purpose.
-
-
-## Build for Mac and Linux
-
-Execute the following commands:
-
-```
-$ mkdir build
-$ cd build
-$ ../configure
-$ make
-```
+It has been tested in Windows 10 64bit.
 
 
 ## Let's Try It
@@ -293,9 +291,9 @@ Example:
 You can specify more than one `.ORG` directive in a program.
 
 
-### .PROC
+### .SCOPE
 
-You can localize labels by surrounding codes with `.PROC` and `.END` directives.
+You can localize labels by surrounding codes with `.SCOPE` and `.END` directives.
 Any labels that appear between these directives are hidden from outside.
 It's possible to specify the same symbol for the global and the local labels,
 which are dealt with as different ones.
@@ -304,13 +302,13 @@ which are dealt with as different ones.
 label1: .EQU    0x1111
 label2: .EQU    0x2222
 
-        .PROC
+        .SCOPE
 label1: .EQU    0x1234   ; not visible from outside
         .DW     label1   ; 0x1234
         .DW     label2   ; 0x2222
         .END
 
-        .PROC
+        .SCOPE
 label1: .EQU    0x5678   ; not visible from outside
         .DW     label1   ; 0x5678
         .DW     label2   ; 0x2222
@@ -323,7 +321,7 @@ label1: .EQU    0x5678   ; not visible from outside
 Even in the localized region, labels declared with double-colon `::` will be defined as global ones.
 
 ```
-         .PROC
+         .SCOPE
 label1:  .EQU    0x1234   ; not visible from outside
 label2:: .EQU    0x5678   ; visible from outside
          .DW     label1   ; 0x1234
@@ -331,6 +329,29 @@ label2:: .EQU    0x5678   ; visible from outside
          .END
 
          .DW     label2   ; 0x5678
+```
+
+Directive `.SCOPE` also has a function to save and restore value of accumulators `A` and `B`, and index register `X`.
+Specify the register names as operands of `.SCOPE` like follows:
+
+```
+        LDX     0x1234
+        .SCOPE  X
+        ;
+        ; some process modifying X
+        ;
+        .END
+        ; The value of X is restored after exiting .SCOPE, to 0x1234 in this case.
+
+        LDX     0x1234
+        LDAA    0x56
+        LDAB    0x78
+        .SCOPE  X,A,B
+        ;
+        ; some process modifying X, A and B
+        ;
+        .END
+        ; The values of X, A and B are restored after exiting .SCOPE.
 ```
 
 
@@ -372,8 +393,63 @@ Since the code in a macro is implicitly surrounded by `.SCOPE`, any labels that 
 
 ### .PCGPAGE and .PCG
 
+```
+        .PCGPAGE page1,USER,32
+
+        .PCG    circle1x1,1,1
+        .DB     b"..####.."
+        .DB     b".#....#."
+        .DB     b"#......#"
+        .DB     b"#......#"
+        .DB     b"#......#"
+        .DB     b"#......#"
+        .DB     b".#....#."
+        .DB     b"..####.."
+        .END
+
+        .PCG    circle2x2,2,2
+        .DB     b".....######....."
+        .DB     b"...##......##..."
+        .DB     b"..#..........#.."
+        .DB     b".#............#."
+        .DB     b".#............#."
+        .DB     b"#..............#"
+        .DB     b"#..............#"
+        .DB     b"#..............#"
+        .DB     b"#..............#"
+        .DB     b"#..............#"
+        .DB     b"#..............#"
+        .DB     b".#............#."
+        .DB     b".#............#."
+        .DB     b"..#..........#.."
+        .DB     b"...##......##..."
+        .DB     b".....######....."
+
+        .END
+
+        .END
+```
 
 
+```
+.PCGPAGE symbol,[USER|CRAM],start-of-character-code
+```
+
+```
+.PCG symbol,width,height
+```
+
+```
+        .PCG    circle1x1,1,1
+        .DB     0x3c,0x42,,0x81,0x81,0x81,0x81,0x42,0x3c
+        .END
+```
+
+- `PCGPAGE.symbol.STORE`
+- `PCG.symbol.PUT`
+- `PCG.symbol.PUTATTR fg,bg`
+- `PCG.symbol.ERASE`
+- `PCG.symbol.ERASEATTR fg,bg`
 
 
 ## Instructions
