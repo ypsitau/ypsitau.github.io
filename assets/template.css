@@ -50,6 +50,28 @@ pre, pre.highlight {
 	background: #eeeeee;
 }
 
+table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 1em;
+  background-color: #ffffff;
+}
+
+th, td {
+    padding: .5em;
+    vertical-align: top;
+    border-top: 1px solid #cccccc;
+}
+
+thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #cccccc;
+}
+
+tbody + tbody {
+    border-top: 2px solid #cccccc;
+}
+
 .list-group.list-group-root {
 	padding: 0;
 	overflow: hidden;
