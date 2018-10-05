@@ -1,0 +1,5 @@
+/_site
+/_reference
+*~
+.DS_Store
+.jekyll-metadata

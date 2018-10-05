@@ -1,0 +1,4 @@
+markdown: kramdown
+highlighter: rouge
+plugins:
+  - jekyll-redirect-from
