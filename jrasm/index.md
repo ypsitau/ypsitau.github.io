@@ -29,7 +29,7 @@ This is an assembler of Motorola 6800 MPU, an 8bit CPU designed by Motorola in 1
 And it has some features that I expect are useful to program for JR-200, a micro computer made by Panasonic in 1983.
 
 This tool has been inspired by a JR-200 emulator VJR-200 developed by FIND
-whose web site is [here](http://www.geocities.jp/find_jr200/vjr200.html).
+whose web site is [here](http://www.geocities.jp/find_jr200/vjr200_en.html).
 
 
 ## Installation
@@ -74,8 +74,7 @@ To assemble it, just launch `jrasm` with the source file name.
 > jrasm helloworld.asm
 ```
 
-This creates a CJR file named `helloworld.cjr`. You can load the CJR file to
-[JR-200 emulator](http://www.geocities.jp/find_jr200/vjr200.html)
+This creates a CJR file named `helloworld.cjr`. You can load the CJR file to a JR-200 emulator
 or convert it into a WAV file that is fed to a real machine through a cassette recorder interface.
 
 After loading it, you can call the program using JR-200 BASIC like follows:
