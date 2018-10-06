@@ -3,11 +3,13 @@ layout: basement
 title: jrasm - Assembler for JR-200
 tracking_id: UA-38761061-3
 ---
+{% assign jrasm_version = '0.1.1' %}
+
 <div class="jumbotron">
   <div class="container-fluid">
 	<h1 class="display-4">jrasm - Assembler for JR-200
 	  <span class="float-right">
-		<a class="btn btn-secondary" href="https://github.com/ypsitau/jrasm/releases/download/v0.1.1/jrasm-0.1.1.zip">
+		<a class="btn btn-secondary" href="https://github.com/ypsitau/jrasm/releases/download/v{{ jrasm_version }}/jrasm-{{ jrasm_version }}.zip">
 		  <i class="fas fa-download mr-2"></i>Download
 		</a>
 		<a class="btn btn-secondary" href="https://github.com/ypsitau/jrasm">
@@ -25,8 +27,8 @@ tracking_id: UA-38761061-3
 
 ## Installation
 
-A Windows executable is available [here](https://github.com/ypsitau/jrasm/releases/download/v0.1.1/jrasm-0.1.1.zip).
-Expand it in a directory that is included in `PATH` environment variable.
+A Windows executable is available [here](https://github.com/ypsitau/jrasm/releases/download/v{{ jrasm_version }}/jrasm-{{ jrasm_version }}.zip).
+Expand its content in a directory that is included in `PATH` environment variable.
 
 It has been tested in Windows 10 64bit.
 
