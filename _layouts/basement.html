@@ -1,14 +1,16 @@
 <html>
 <head>
   <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-38761061-3"></script>
+  {% if page.tracking_id %}
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ page.tracking_id }}"></script>
   <script>
 	window.dataLayer = window.dataLayer || [];
 	function gtag(){dataLayer.push(arguments);}
 	gtag('js', new Date());
 
-	gtag('config', 'UA-38761061-3');
+	gtag('config', '{{ page.tracking_id }}');
   </script>
+  {% endif %}
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -20,7 +22,7 @@
   <link rel="stylesheet" href="/assets/template.css">
   <style type="text/css">
   </style>
-  <title>ypsitau's Black Box</title>
+  <title>{{ page.title }}</title>
 </head>
 <body class="p-5">
 {{ content }}
