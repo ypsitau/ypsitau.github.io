@@ -138,7 +138,7 @@ Available options are:
 |-------------------|------------|-------------------------------------------------------------------|
 |`--output=file`    |`-o file`   |Specifies the filename to output.                                  |
 |`--print-disasm-l` |`-d`        |Prints a disassembler dump of the product in lower case.           |
-|`--print-disasm-l` |`-d`        |Prints a disassembler dump of the product in upper case.           |
+|`--print-disasm-u` |`-D`        |Prints a disassembler dump of the product in upper case.           |
 |`--print-hexdump-l`|`-x`        |Prints a hexadecimal dump of the product in lower case.            |
 |`--print-hexdump-u`|`-X`        |Prints a hexadecimal dump of the product in upper case.            |
 |`--print-list-l`   |`-l`        |Prints a list of labels in lower case.                             |
@@ -148,16 +148,13 @@ Available options are:
 |`--verbose`        |`-v`        |Reports various things.                                            |
 |`--help`           |`-h`        |Prints help message.                                               |
 
-When you launch the program with a source file, it will generate a product in CJR format
-that can be loaded to VJR-200, a JR-200 emulator.
-
 
 ## Comment
 
 When a semicolon `;` or a pair of slash characters `//` appears, the following text until the end of the line
 is parsed as a line comment.
 
-You can also use a block comment by surrounding texts with `/*`and `*/`, which can contain multiple lines.
+You can also use a block comment by surrounding texts with `/*` and `*/`, which can contain multiple lines.
 
 ```
 ; line comment
