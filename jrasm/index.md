@@ -28,8 +28,8 @@ tracking_id: UA-38761061-3
 This is an assembler of Motorola 6800 MPU, an 8bit CPU designed by Motorola in 1974.
 And it has some features that I expect are useful to program for JR-200, a micro computer made by Panasonic in 1983.
 
-This tool has been inspired by a JR-200 emulator VJR-200 developed by FIND
-whose web site is [here](http://www.geocities.jp/find_jr200/vjr200_en.html).
+This project has been inspired by JR-200 emulator VJR-200 developed by FIND,
+which is available [here](http://www.geocities.jp/find_jr200/vjr200_en.html).
 
 
 ## Installation
@@ -232,7 +232,7 @@ The bit-pattern literal generates a sequence of byte-sized data like follows:
 The jrasm assembler supports following directives:
 
 
-### .CSEG, .DSEG and .ISEG
+### .CSEG and .DSEG
 
 The directives `.CSEG` and `.DSEG` declare the beginning of code and data segment respectively.
 They don't put any restriction on what items are place in: you can write data sequence using directive `.DB`
@@ -251,13 +251,6 @@ Hello:  .DB     "Hello"
 
 The assembler program is pleced in the code segment before any `.CSEG` or `.DSEG` directive appears.
 Each segment must have the current address initialized using `.ORG` directive.
-
-Directive `.ISEG` ...
-
-Example:
-```
-        .ISEG
-```
 
 
 ### .DB and .DW
@@ -401,6 +394,21 @@ mul4:   .MACRO target ; A macro to multiply a value in memory by four
 
 Since the code in a macro is implicitly surrounded by `.SCOPE`, any labels that are defined within it are hidden from outside.
 
+A macro can set a default value for each parameter by specifying the parameter followed by `=` and the value.
+If the number of parameters passed to the macro is less than required
+or parameters are declared blank by being specified by a series of commas, the default values are used instead.
+```
+macro1  .MACRO arg1=0x11, arg2=0x22, arg3=0x33, arg4=0x44
+        .DB     arg1, arg2, arg3, arg4
+        .END
+
+        macro1  0xaa, 0xbb, 0xcc, 0xdd   ; 0xaa, 0xbb, 0xcc, 0xdd
+        macro1  0xaa                     ; 0xaa, 0x22, 0x33, 0x44
+        macro1  0xaa, 0xbb               ; 0xaa, 0xbb, 0x33, 0x44
+        macro1  0xaa, , 0xcc             ; 0xaa, 0x22, 0xcc, 0x44
+        macro1  , , 0xcc, 0xdd           ; 0x11, 0x22, 0xcc, 0xdd
+
+```
 
 ### .PCGPAGE and .PCG
 
