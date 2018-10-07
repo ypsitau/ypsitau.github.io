@@ -18,7 +18,7 @@ tracking_id: UA-38761061-3
 	  </span>
 	</h1>
 	<p class="lead">
-	An assembler of Motorola 6800 MPU that features some functions useful to program for JR-200.
+	An assembler of Motorola 6800 MPU with features useful to program for JR-200.
 	</p>
   </div>
 </div>
