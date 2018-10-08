@@ -268,7 +268,7 @@ So, for examle, `"ABC"` in the direcive is equivalent to a sequence of `0x41`, `
 
 ### .FILENAME.JR
 
-Specivies a filename up to 16 charactesrs that is to be stored in CJR file.
+Specifies a filename up to 16 charactesrs that is to be stored in CJR file.
 This name is displayed when you run `LOAD` or `MLOAD` command in JR BASIC environment.
 If this directive is omitted, the name of the assembler source file will be stored.
 
@@ -277,6 +277,67 @@ Example:
         .FILENAME.JR "Hello"
 ```
 
+
+### .INCLUDE
+
+Directive `.INCLUDE` takes in the content of another source file whose name is specified as its parameter.
+
+```
+        .INCLUDE "another.inc"
+        .INCLUDE "src/yetanother.inc"
+```
+
+
+### .MACRO
+
+Directive `.MACRO` defines a macro, a sequence of instructions and directives that is bound to a specific symbol.
+You can expand the sequence anywhere in the code by specifying the symbol.
+
+A macro consists of a label that represents the macro name
+and a code sequence surrounded by `.MACRO` and `.END` directives.
+
+```
+mul4_a: .MACRO  ; A macro to multiply A-accumulator's value by four
+        ASLA
+        ASLA
+        .END
+
+        mul4_a  ; Expands the macro
+```
+
+When directive `.MACRO` is called with some arguments, the created macro can take values and expressions as its arguments. When the macro is expanded, a symbol that matches argument name will be replaced with the value passed to that argument. You can pass not only immediate value to an argument but other addressing expression like index and external memory.
+ There's no limit on the number of arguments.
+
+```
+mul4:   .MACRO target ; A macro to multiply a value in memory by four
+        LDAA    target
+        ASLA
+        ASLA
+        STAA    target
+        .END
+
+        mul4    {0x09}    ; DIRECT addressing
+        mul4    [X+0x03]  ; INDEX addressing
+        mul4    [foo]     ; EXTERNAL addressing
+```
+
+Since the code in a macro is implicitly surrounded by `.SCOPE`, any labels that are defined within it are hidden from outside.
+
+A macro can set a default value for each parameter by specifying the parameter followed by `=` and the value.
+If the number of parameters passed to the macro is less than required
+or parameters are declared blank by being specified by a series of commas, the default values are used instead.
+```
+macro1  .MACRO arg1=0x11, arg2=0x22, arg3=0x33, arg4=0x44
+        .DB     arg1, arg2, arg3, arg4
+        .END
+
+        macro1  0xaa, 0xbb, 0xcc, 0xdd   ; 0xaa, 0xbb, 0xcc, 0xdd
+        macro1  0xaa                     ; 0xaa, 0x22, 0x33, 0x44
+        macro1  0xaa, 0xbb               ; 0xaa, 0xbb, 0x33, 0x44
+        macro1  0xaa, , 0xcc             ; 0xaa, 0x22, 0xcc, 0x44
+        macro1  , , 0xcc, 0xdd           ; 0x11, 0x22, 0xcc, 0xdd
+
+```
 
 ### .ORG
 
@@ -290,6 +351,67 @@ Example:
 ```
 
 You can specify more than one `.ORG` directive in a program.
+
+
+### .PCGPAGE and .PCG
+
+```
+        .PCGPAGE page1,USER,32
+
+        .PCG    circle1x1,1,1
+        .DB     b"..####.."
+        .DB     b".#....#."
+        .DB     b"#......#"
+        .DB     b"#......#"
+        .DB     b"#......#"
+        .DB     b"#......#"
+        .DB     b".#....#."
+        .DB     b"..####.."
+        .END
+
+        .PCG    circle2x2,2,2
+        .DB     b".....######....."
+        .DB     b"...##......##..."
+        .DB     b"..#..........#.."
+        .DB     b".#............#."
+        .DB     b".#............#."
+        .DB     b"#..............#"
+        .DB     b"#..............#"
+        .DB     b"#..............#"
+        .DB     b"#..............#"
+        .DB     b"#..............#"
+        .DB     b"#..............#"
+        .DB     b".#............#."
+        .DB     b".#............#."
+        .DB     b"..#..........#.."
+        .DB     b"...##......##..."
+        .DB     b".....######....."
+
+        .END
+
+        .END
+```
+
+
+```
+.PCGPAGE symbol,[USER|CRAM],start_of_character_code
+```
+
+```
+.PCG symbol,width,height
+```
+
+```
+        .PCG    circle1x1,1,1
+        .DB     0x3c,0x42,,0x81,0x81,0x81,0x81,0x42,0x3c
+        .END
+```
+
+- `PCGPAGE.symbol.STORE`
+- `PCG.symbol.PUT`
+- `PCG.symbol.PUTATTR fg,bg`
+- `PCG.symbol.ERASE`
+- `PCG.symbol.ERASEATTR fg,bg`
 
 
 ### .SCOPE
@@ -354,118 +476,6 @@ Specify the register names as operands of `.SCOPE` like follows:
         .END
         ; The values of X, A and B are restored after exiting .SCOPE.
 ```
-
-
-### .MACRO
-
-Directive `.MACRO` defines a macro, a sequence of instructions and directives that is bound to a specific symbol.
-You can expand the sequence anywhere in the code by specifying the symbol.
-
-A macro consists of a label that represents the macro name
-and a code sequence surrounded by `.MACRO` and `.END` directives.
-
-```
-mul4_a: .MACRO  ; A macro to multiply A-accumulator's value by four
-        ASLA
-        ASLA
-        .END
-
-        mul4_a  ; Expands the macro
-```
-
-When directive `.MACRO` is called with some arguments, the created macro can take values and expressions as its arguments. When the macro is expanded, a symbol that matches argument name will be replaced with the value passed to that argument. You can pass not only immediate value to an argument but other addressing expression like index and external memory.
- There's no limit on the number of arguments.
-
-```
-mul4:   .MACRO target ; A macro to multiply a value in memory by four
-        LDAA    target
-        ASLA
-        ASLA
-        STAA    target
-        .END
-
-        mul4    {0x09}    ; DIRECT addressing
-        mul4    [X+0x03]  ; INDEX addressing
-        mul4    [foo]     ; EXTERNAL addressing
-```
-
-Since the code in a macro is implicitly surrounded by `.SCOPE`, any labels that are defined within it are hidden from outside.
-
-A macro can set a default value for each parameter by specifying the parameter followed by `=` and the value.
-If the number of parameters passed to the macro is less than required
-or parameters are declared blank by being specified by a series of commas, the default values are used instead.
-```
-macro1  .MACRO arg1=0x11, arg2=0x22, arg3=0x33, arg4=0x44
-        .DB     arg1, arg2, arg3, arg4
-        .END
-
-        macro1  0xaa, 0xbb, 0xcc, 0xdd   ; 0xaa, 0xbb, 0xcc, 0xdd
-        macro1  0xaa                     ; 0xaa, 0x22, 0x33, 0x44
-        macro1  0xaa, 0xbb               ; 0xaa, 0xbb, 0x33, 0x44
-        macro1  0xaa, , 0xcc             ; 0xaa, 0x22, 0xcc, 0x44
-        macro1  , , 0xcc, 0xdd           ; 0x11, 0x22, 0xcc, 0xdd
-
-```
-
-### .PCGPAGE and .PCG
-
-```
-        .PCGPAGE page1,USER,32
-
-        .PCG    circle1x1,1,1
-        .DB     b"..####.."
-        .DB     b".#....#."
-        .DB     b"#......#"
-        .DB     b"#......#"
-        .DB     b"#......#"
-        .DB     b"#......#"
-        .DB     b".#....#."
-        .DB     b"..####.."
-        .END
-
-        .PCG    circle2x2,2,2
-        .DB     b".....######....."
-        .DB     b"...##......##..."
-        .DB     b"..#..........#.."
-        .DB     b".#............#."
-        .DB     b".#............#."
-        .DB     b"#..............#"
-        .DB     b"#..............#"
-        .DB     b"#..............#"
-        .DB     b"#..............#"
-        .DB     b"#..............#"
-        .DB     b"#..............#"
-        .DB     b".#............#."
-        .DB     b".#............#."
-        .DB     b"..#..........#.."
-        .DB     b"...##......##..."
-        .DB     b".....######....."
-
-        .END
-
-        .END
-```
-
-
-```
-.PCGPAGE symbol,[USER|CRAM],start_of_character_code
-```
-
-```
-.PCG symbol,width,height
-```
-
-```
-        .PCG    circle1x1,1,1
-        .DB     0x3c,0x42,,0x81,0x81,0x81,0x81,0x42,0x3c
-        .END
-```
-
-- `PCGPAGE.symbol.STORE`
-- `PCG.symbol.PUT`
-- `PCG.symbol.PUTATTR fg,bg`
-- `PCG.symbol.ERASE`
-- `PCG.symbol.ERASEATTR fg,bg`
 
 
 ## Instructions
