@@ -208,6 +208,13 @@ This means that you can describe an instruction `LDAA` with a symbol `LDAA`, `ld
 Also, when you define a label named `Label1`, it can be referred to as `label1`, `LABEL1`, `LaBel1`
 and anything like that.
 
+There are some pre-defined symbols listed below:
+
+|Symbol  |Assigned Value|Usage                                                     |
+|--------|--------------|----------------------------------------------------------|
+|`@BYTE` |`1`           |Specifies data size for `.DS` directive.                  |
+|`@WORD` |`2`           |                                                          |
+
 
 ### Bit-Pattern
 
