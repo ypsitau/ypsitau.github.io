@@ -250,7 +250,7 @@ The assembler program is pleced in the code segment before any `.CSEG` or `.DSEG
 Each segment must have the current address initialized using `.ORG` directive.
 
 
-### .DB and .DW
+### .DB, .DW and .DS
 
 These directive are used to store binary data. The directive `.DB` contains 8-bit data while `.DW` does 16-bit.
 
@@ -264,6 +264,15 @@ Example:
 
 When a string literal appears in the directive, a null terminate character is NOT appended.
 So, for examle, `"ABC"` in the direcive is equivalent to a sequence of `0x41`, `0x42`, `0x43`
+
+Directive `.DS` reserves memory the size specified by the given parameter in bytes.
+
+```
+        .DS     32           ; 32bytes
+        .DS     @byte * 32   ; also 32bytes, but more readable
+        .DS     @word        ; 2bytes
+        .DS     @word * 32   ; 64bytes
+```
 
 
 ### .FILENAME.JR
@@ -475,6 +484,18 @@ Specify the register names as operands of `.SCOPE` like follows:
         ;
         .END
         ; The values of X, A and B are restored after exiting .SCOPE.
+```
+
+### .STRUCT
+
+```
+struct1:
+        .STRUCT
+posx:   .DS     @byte
+posy:   .DS     @byte
+score:  .DS     @word
+attr:   .DS     @byte
+        .END
 ```
 
 
