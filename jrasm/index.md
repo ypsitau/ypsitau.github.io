@@ -224,6 +224,7 @@ The bit-pattern literal generates a sequence of byte-sized data like follows:
         .db     b"#.#......##...#.#.#.#.#.########..#....." ; 0xa0, 0x62, 0xaa, 0xff, 0x20
 ```
 
+
 ## Operator
 
 You can use the following operators in operands:
