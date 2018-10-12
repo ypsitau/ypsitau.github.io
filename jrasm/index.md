@@ -134,19 +134,19 @@ jrasm [options] src
 
 Available options are:
 
-|Long Format        |Short format|Function                                                           |
-|-------------------|------------|-------------------------------------------------------------------|
-|`--output=file`    |`-o file`   |Specifies the filename to output.                                  |
-|`--print-disasm-l` |`-d`        |Prints a disassembler dump of the product in lower case.           |
-|`--print-disasm-u` |`-D`        |Prints a disassembler dump of the product in upper case.           |
-|`--print-hexdump-l`|`-x`        |Prints a hexadecimal dump of the product in lower case.            |
-|`--print-hexdump-u`|`-X`        |Prints a hexadecimal dump of the product in upper case.            |
-|`--print-list-l`   |`-l`        |Prints a list of labels in lower case.                             |
-|`--print-list-u`   |`-L`        |Prints a list of labels in upper case.                             |
-|`--print-memory-l` |`-m`        |Prints a memory image in lower case.                               |
-|`--print-memory-u` |`-M`        |Prints a memory image in upper case.                               |
-|`--verbose`        |`-v`        |Reports various things.                                            |
-|`--help`           |`-h`        |Prints help message.                                               |
+|Long Format         |Short format|Function                                                           |
+|--------------------|------------|-------------------------------------------------------------------|
+|`--output=file`     |`-o file`   |Specifies the filename to output.                                  |
+|`--print-disasm-l`  |`-d`        |Prints disassembler dump of the product in lower case.             |
+|`--print-disasm-u`  |`-D`        |Prints disassembler dump of the product in upper case.             |
+|`--print-hexdump-l` |`-x`        |Prints hexadecimal dump of the product in lower case.              |
+|`--print-hexdump-u` |`-X`        |Prints hexadecimal dump of the product in upper case.              |
+|`--print-list-l`    |`-l`        |Prints list of labels in lower case.                               |
+|`--print-list-u`    |`-L`        |Prints list of labels in upper case.                               |
+|`--print-resource-l`|`-r`        |Prints resource usage in lower case.                               |
+|`--print-resource-u`|`-R`        |Prints resource usage in upper case.                               |
+|`--verbose`         |`-v`        |Reports various things.                                            |
+|`--help`            |`-h`        |Prints help message.                                               |
 
 
 ## Comment
