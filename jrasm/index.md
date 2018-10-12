@@ -212,8 +212,8 @@ There are some pre-defined symbols listed below:
 
 |Symbol  |Assigned Value|Usage                                                     |
 |--------|--------------|----------------------------------------------------------|
-|`@BYTE` |`1`           |Specifies data size for `.DS` directive.                  |
-|`@WORD` |`2`           |                                                          |
+|`@BYTE` |`1`           |Specifies the size of one-byte data.                      |
+|`@WORD` |`2`           |Specifies the size of one-word data.                      |
 
 
 ### Bit-Pattern
@@ -238,15 +238,16 @@ You can use the following operators in operands:
 
 |Operator|Function                                                           |
 |--------|-------------------------------------------------------------------|
-|`+`     |                                                                   |
-|`-`     |                                                                   |
-|`*`     |                                                                   |
-|`/`     |                                                                   |
-|`&`     |                                                                   |
-|`|`     |                                                                   |
-|`<+>`   |                                                                   |
-|`<<`    |                                                                   |
-|`>>`    |                                                                   |
+|`+`     |Addiction.                                                         |
+|`-`     |Subraction.                                                        |
+|`*`     |Multiplication.                                                    |
+|`/`     |Division.                                                          |
+|`&`     |Bitwise AND.                                                       |
+|`|`     |Bitwise OR.                                                        |
+|`^`     |Bitwise XOR.                                                       |
+|`<+>`   |Adds value in a bracket or brace. e.g. `[0x1320] <+> 8` makes `[0x1328], `[x+0x23] <+> 5` makes `[x+0x28]`.|
+|`<<`    |Bit shift to left.                                                 |
+|`>>`    |Bit shift to right.                                                |
 
 
 ## Directive
@@ -259,7 +260,9 @@ The jrasm assembler supports following directives:
 The directives `.CSEG` and `.DSEG` declare the beginning of code and data segment respectively.
 They don't put any restriction on what items are place in: you can write data sequence using directive `.DB`
 in the code segment and can put instructions in the data segment as well.
-It could be used to put some data sequence in the middle of program code like follows:
+
+Since they hold different address counters each other,
+you can put some data sequence in the middle of program code like follows:
 
 ```
         .CSEG
@@ -271,13 +274,16 @@ Hello:  .DB     "Hello"
         ; ... any jobs ...
 ```
 
-The assembler program is pleced in the code segment before any `.CSEG` or `.DSEG` directive appears.
-Each segment must have the current address initialized using `.ORG` directive.
+The code segment is selected before any `.CSEG` or `.DSEG` directive appears.
+
+You have to specify at least one `.ORG` directive in the first code segment.
+The original address of the data segment is set right after the end of the code segment
+unless you explicitly specify `.ORG` directive for it.
 
 
 ### .DB, .DW and .DS
 
-These directive are used to store binary data. The directive `.DB` contains 8-bit data while `.DW` does 16-bit.
+These directive are used to store binary data. The directive `.DB` contains 8bit data while `.DW` does 16bit.
 
 Directive `.DB` accepts string literal as well.
 
@@ -317,8 +323,8 @@ Example:
 Directive `.INCLUDE` takes in the content of another source file whose name is specified as its parameter.
 
 ```
-        .INCLUDE "another.inc"
-        .INCLUDE "src/yetanother.inc"
+        .INCLUDE "something.inc"
+        .INCLUDE "src/another.inc"
 ```
 
 
@@ -389,6 +395,13 @@ You can specify more than one `.ORG` directive in a program.
 
 ### .PCGPAGE and .PCG
 
+Directives `.PCGPAGE` and `.PCG` are used to create pattern data for JR-200's character generator.
+
+A PCG is a pattern data and a PCG page is a set of PCGs.
+You can create multiple PCG pages, whic may be useful to flip data in some operations.
+
+Below is a sample:
+
 ```
         .PCGPAGE page1,USER,32
 
@@ -426,14 +439,38 @@ You can specify more than one `.ORG` directive in a program.
         .END
 ```
 
+The format of `.PCGPAGE` is as follows:
 
 ```
 .PCGPAGE symbol,[USER|CRAM],start_of_character_code
 ```
 
+The `symbol` parametet specifies a name associated with the PCG page. This name is used to create a macro.
+
+The second parameter specifies one of the symbols `USER` and `CRAM`, which represents the user-defined character and the character RAM respectively.
+
+The `start_of_character_code` parameter specifies the starting value of character code that is to be assigned to each PCG. The example above, which specifies `32` for the parameter, assigns code `32` for `circle1x1`, and `33`, `34`, `35` and `36` for `circle2x2`.
+
+The assignment of character code follows the rules below:
+
+- A pattern filled with `zero` will be assigned with code `0x00` instead of a new one.
+
+- A pattern that matches one that already exists will be assigned with a code of the existing.
+
+The for mat of `.PCG` is as follows:
+
 ```
 .PCG symbol,width,height
 ```
+
+The `symbol` parameter specifies a name associated with the PCG. This name is used to create macros.
+
+The `width` and `height` parameters specify the PCG's size in 8x8 characters.
+
+There must be only `.DB` directives in `.PCG`.
+
+You can describe pattern data with bit-pattern literal as well as numeric literals.
+The code below is a sample that uses numeric literals to describe the same information as above:
 
 ```
         .PCG    circle1x1,1,1
@@ -441,11 +478,19 @@ You can specify more than one `.ORG` directive in a program.
         .END
 ```
 
-- `PCGPAGE.symbol.STORE`
-- `PCG.symbol.PUT`
-- `PCG.symbol.PUTATTR fg,bg`
-- `PCG.symbol.ERASE`
-- `PCG.symbol.ERASEATTR fg,bg`
+Directive `.PCGPAGE` creates the following macro where `symbol` is replaced with a symbol specified in the direcive's parameter:
+
+- `PCGPAGE.symbol.STORE` ... Executing it copies PCG data to appropriate address of user-defined or CRAM area.
+
+Directive `.PCG` created the following macro where `symbol` is replaced with a symbol specified in the directive's paramter:
+
+- `PCG.symbol.PUT offset=0` ... Writes character codes in memory indicated by X register.
+- `PCG.symbol.PUTATTR fg=7,bg=0,offset=0` ... Writes the foreground color `fg` and background color `bg` in memory indicated by X register. For user-defined characters, `b6` bit is set to one.
+- `PCG.symbol.ERASE offset=0` ... Writes zeros in memory indicated by X register.
+- `PCG.symbol.ERASEATTR fg=7,bg=0,offset=0` ... Writes the foreground color `fg` and background color `bg` in memory indicated by X register. Even for user-defined characters, `b6` bit is not set to one.
+- `PCG.symbol.FILL data,offset=0` ... Writes specified value `data` in memory indicated by X register.
+
+The parameter `offset` indicates an address offset for each writing.
 
 
 ### .SCOPE
@@ -513,6 +558,13 @@ Specify the register names as operands of `.SCOPE` like follows:
 
 ### .STRUCT
 
+Directive `.STRUCT` provides a method to declare data structure.
+The directive must be preceded by a label assigned to it as the structure name and consist of labels and `.DS` directives.
+
+It creates symbols that are composed with the structure name and labels inside and assigns them with offset values from the beginning.
+
+Below is an example:
+
 ```
 struct1:
         .STRUCT
@@ -522,6 +574,10 @@ score:  .DS     @word
 attr:   .DS     @byte
         .END
 ```
+
+In this case, symbols `struct1.posx`, `struct1.posy`, `struct1.score` and `struct1.attr` are created and assigned to `0`, `1`, `2` and `4` respectively.
+
+It also creates a symbol that joins a character `@` and the structure name and assigns the structure's size to it. In the example above, a symbol `@struct1` assigned with `5` is created.
 
 
 ## Instructions
