@@ -493,6 +493,32 @@ Directive `.PCG` created the following macro where `symbol` is replaced with a s
 The parameter `offset` indicates an address offset for each writing.
 
 
+### .SAVE
+
+Directive `.SAVE` will save and restore value of accumulators `A` and `B`, and index register `X`.
+Specify the register names as operands the directive like follows:
+
+```
+        LDX     0x1234
+        .SAVE   X
+        ;
+        ; some process modifying X
+        ;
+        .END
+        ; The value of X is restored after exiting .SAVE, to 0x1234 in this case.
+
+        LDX     0x1234
+        LDAA    0x56
+        LDAB    0x78
+        .SAVE   X,A,B
+        ;
+        ; some process modifying X, A and B
+        ;
+        .END
+        ; The values of X, A and B are restored after exiting .SAVE.
+```
+
+
 ### .SCOPE
 
 You can localize labels by surrounding codes with `.SCOPE` and `.END` directives.
@@ -533,28 +559,6 @@ label2:: .EQU    0x5678   ; visible from outside
          .DW     label2   ; 0x5678
 ```
 
-Directive `.SCOPE` also has a function to save and restore value of accumulators `A` and `B`, and index register `X`.
-Specify the register names as operands of `.SCOPE` like follows:
-
-```
-        LDX     0x1234
-        .SCOPE  X
-        ;
-        ; some process modifying X
-        ;
-        .END
-        ; The value of X is restored after exiting .SCOPE, to 0x1234 in this case.
-
-        LDX     0x1234
-        LDAA    0x56
-        LDAB    0x78
-        .SCOPE  X,A,B
-        ;
-        ; some process modifying X, A and B
-        ;
-        .END
-        ; The values of X, A and B are restored after exiting .SCOPE.
-```
 
 ### .STRUCT
 
