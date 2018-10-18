@@ -403,7 +403,7 @@ You can create multiple PCG pages, whic may be useful to flip data in some opera
 Below is a sample:
 
 ```
-        .PCGPAGE page1,USER,32
+        .PCGPAGE page1,USER:32
 
         .PCG    circle1x1,1,1
         .DB     b"..####.."
@@ -442,14 +442,19 @@ Below is a sample:
 The format of `.PCGPAGE` is as follows:
 
 ```
-.PCGPAGE symbol,[USER|CRAM],start_of_character_code
+.PCGPAGE symbol,range,...
 ```
 
 The `symbol` parametet specifies a name associated with the PCG page. This name is used to create a macro.
 
-The second parameter specifies one of the symbols `USER` and `CRAM`, which represents the user-defined character and the character RAM respectively.
+The `range` parameter has a format of `[USER|CRAM]:start` or `[USER|CRAM]:star:end'
+where the symbol `USER` and `CRAM` represents the user-defined character and the character RAM respectively.
 
-The `start_of_character_code` parameter specifies the starting value of character code that is to be assigned to each PCG. The example above, which specifies `32` for the parameter, assigns code `32` for `circle1x1`, and `33`, `34`, `35` and `36` for `circle2x2`.
+The `start` and `end` parameter specify the starting and ending value of character codes that are to be assigned to each PCG. If `end` is omitted, the largest possible value is specified: `95` for the user-defined and `255` for the character RAM.
+
+The example above, which specifies `32` for the parameter, assigns code `32` for `circle1x1`, and `33`, `34`, `35` and `36` for `circle2x2`.
+
+You can specify more than one ranges.
 
 The assignment of character code follows the rules below:
 
