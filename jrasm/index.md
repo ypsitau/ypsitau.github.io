@@ -29,8 +29,7 @@ This is an assembler of Motorola 6800 MPU, an 8bit CPU designed by Motorola in 1
 And it has some features that I expect are useful to program for JR-200, a micro computer made by Panasonic in 1983.
 
 This project has been inspired by JR-200 emulator VJR-200 developed by FIND,
-which is available [here](http://www.geocities.jp/find_jr200/vjr200_en.html).
-
+which is available [here](http://www17.plala.or.jp/find_jr200/vjr200_en.html).
 
 ## Installation
 
