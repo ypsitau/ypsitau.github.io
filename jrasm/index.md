@@ -3,7 +3,7 @@ layout: basement
 title: jrasm - Assembler for JR-200
 tracking_id: UA-38761061-3
 ---
-{% assign jrasm_version = '0.2.0' %}
+{% assign jrasm_version = '0.3.0' %}
 
 <div class="jumbotron">
   <div class="container-fluid">
