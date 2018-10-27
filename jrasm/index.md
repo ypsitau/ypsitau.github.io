@@ -217,7 +217,7 @@ There are some pre-defined symbols listed below:
 
 ### Bit-Pattern
 
-A string preceded by "`b`" is a bit-pattern literal that consists of a series of ascii characters
+A string preceded by "`b`" or "`B`" is a bit-pattern literal that consists of a series of ascii characters
 that correspond to binary data `0` and `1`.
 The space, period '`.`', comma '`,`', under score '`_`' and hyphen '`-`' are recognized as `0` and
 others are `1`.
@@ -228,6 +228,36 @@ The bit-pattern literal generates a sequence of byte-sized data like follows:
         .db     b"#.#.#.#."                                 ; 0xaa
         .db     b"#.#......##...#."                         ; 0xa0, 0x62
         .db     b"#.#......##...#.#.#.#.#.########..#....." ; 0xa0, 0x62, 0xaa, 0xff, 0x20
+```
+
+### MML
+
+A string preceded by "`m`" or "`M`" is an MML literal that contain a sequence of MML data.
+It will be parsed and converted to JR-200 music data.
+
+- `A`-`G` ... A note. A following number `1`, `2`, `4`, `8` and `16` means the length of the note's duration
+  where `1` is a whole note, `2` is a half, `4` is a quarter and so on.
+  A number followed by a period specifies a dotted note.
+  If no number appended, a default length specified by `L` command is used.
+
+- `R` ... A rest. It also has the length as a note does.
+
+- `O` ... Specifies octave with a number from `1` to `5`. 
+
+- `>` ... Raises octave.
+
+- `<` ... Lowers octave.
+
+- `;` ... Specifies a end mark of the MML sequence.
+
+- `L` ... Specifies the default length.
+
+MML sequences are joined together even if they are described in separate lines until an end mark appears.
+
+Example:
+```
+        .db     m"CDEFGAB >CDEFGAB"
+		.db     m"C4C8R4;"
 ```
 
 
@@ -489,15 +519,33 @@ Directive `.PCGPAGE` creates the following macro where `symbol` is replaced with
 Directive `.PCG` created the following macro where `symbol` is replaced with a symbol specified in the directive's paramter:
 
 - `PCG.symbol.PUT offset=0` ... Writes character codes in memory indicated by X register.
-- `PCG.symbol.PUTATTR fg=7,bg=0,offset=0` ... Writes the foreground color `fg` and background color `bg` in memory indicated by X register. For user-defined characters, `b6` bit is set to one.
+
+- `PCG.symbol.PUTATTR offset=0` ... Writes attributes that are specified in `.PCG` directive in memory indicated by X register. For user-defined characters, `b6` bit is set to one.
+
+- `PCG.symbol.PUTATTRFG offset=0` ... Writes foreground attributes that are specified in `.PCG` directive in memory indicated by X register. The background attribute remains intact. For user-defined characters, `b6` bit is set to one.
+
+- `PCG.symbol.SETATTR fg=7,bg=0,offset=0` ... Writes the foreground color `fg` and background color `bg` in memory indicated by X register. Attributes that are specified in `.PCG` directive are just ignored. For user-defined characters, `b6` bit is set to one.
+
 - `PCG.symbol.ERASE offset=0` ... Writes zeros in memory indicated by X register.
+
 - `PCG.symbol.ERASEATTR fg=7,bg=0,offset=0` ... Writes the foreground color `fg` and background color `bg` in memory indicated by X register. Even for user-defined characters, `b6` bit is not set to one.
+
 - `PCG.symbol.FILL data,offset=0` ... Writes specified value `data` in memory indicated by X register.
 
 The parameter `offset` indicates an address offset for each writing.
 
+The macros above don't render characters with code `zero`. If you want to render all the characters including `zero`, use the following macros that are named after corresponding macros but have suffix `X`:
 
-### .SAVE
+- `PCG.symbol.PUTX offset=0`
+- `PCG.symbol.PUTATTRX offset=0`
+- `PCG.symbol.PUTATTRFGX offset=0`
+- `PCG.symbol.SETATTRX fg=7,bg=0,offset=0`
+- `PCG.symbol.ERASEX offset=0`
+- `PCG.symbol.ERASEATTRX fg=7,bg=0,offset=0`
+- `PCG.symbol.FILLX data,offset=0`
+
+
+### .SAVE and .RESTORE
 
 Directive `.SAVE` will save and restore value of accumulators `A` and `B`, and index register `X`.
 Specify the register names as operands the directive like follows:
@@ -506,7 +554,7 @@ Specify the register names as operands the directive like follows:
         LDX     0x1234
         .SAVE   X
         ;
-        ; some process modifying X
+        ; any process
         ;
         .END
         ; The value of X is restored after exiting .SAVE, to 0x1234 in this case.
@@ -516,10 +564,34 @@ Specify the register names as operands the directive like follows:
         LDAB    0x78
         .SAVE   X,A,B
         ;
-        ; some process modifying X, A and B
+        ; any process
         ;
         .END
         ; The values of X, A and B are restored after exiting .SAVE.
+```
+
+Within the `.SAVE` region, you can restore the values at any point using `.RESTORE` directive that
+takes accumulator or register name as its operands.
+
+```
+        .SAVE   A,B,X
+        ;
+        ; any process
+        ;
+        .RESTORE X   ; X is restored here
+        ;
+        ; any process
+        ;
+        .RESTORE A   ; A is restored here
+        ;
+        ; any process
+        ;
+        .RESTORE A,X ; A and X are restored here
+        ;
+        ; any process
+        ;
+        .END
+		; A, B and X are restored here
 ```
 
 
