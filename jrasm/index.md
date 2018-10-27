@@ -275,9 +275,7 @@ You can use the following operators in operands:
 |`&`     |Bitwise AND.                                                       |
 |`|`     |Bitwise OR.                                                        |
 |`^`     |Bitwise XOR.                                                       |
-
-
-|`<+>`   |Adds value in a bracket or brace. e.g. `[0x1320] <+> 8` makes `[0x1328], `[x+0x23] <+> 5` makes `[x+0x28]`.|
+|`<+>`   |Adds value in a bracket or brace. e.g. `[0x1320] <+> 8` makes `[0x1328]`, and `[x+0x23] <+> 5` makes `[x+0x28]`.|
 |`<<`    |Bit shift to left.                                                 |
 |`>>`    |Bit shift to right.                                                |
 
@@ -594,7 +592,7 @@ takes accumulator or register name as its operands.
         ; any process
         ;
         .END
-		; A, B and X are restored here
+        ; A, B and X are restored here
 ```
 
 
