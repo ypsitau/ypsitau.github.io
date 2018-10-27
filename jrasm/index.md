@@ -253,7 +253,7 @@ It will be parsed and converted to JR-200 music data.
 
 - `L` ... Specifies the default length.
 
-MML sequences are joined together even if they are described in separate lines until an end mark appears.
+MML sequences are joined together until an end mark appears even if they are described in separate lines.
 
 Example:
 ```
