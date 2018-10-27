@@ -248,7 +248,7 @@ It will be parsed and converted to JR-200 music data.
 
 - `<` ... Lowers octave.
 
-- `;` ... Specifies a end mark of the MML sequence.
+- `;` ... Specifies an end mark of the MML sequence.
 
 - `L` ... Specifies the default length.
 
