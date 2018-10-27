@@ -275,6 +275,8 @@ You can use the following operators in operands:
 |`&`     |Bitwise AND.                                                       |
 |`|`     |Bitwise OR.                                                        |
 |`^`     |Bitwise XOR.                                                       |
+
+
 |`<+>`   |Adds value in a bracket or brace. e.g. `[0x1320] <+> 8` makes `[0x1328], `[x+0x23] <+> 5` makes `[x+0x28]`.|
 |`<<`    |Bit shift to left.                                                 |
 |`>>`    |Bit shift to right.                                                |
