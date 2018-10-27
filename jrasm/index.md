@@ -239,7 +239,7 @@ It will be parsed and converted to JR-200 music data.
 - `A`-`G` ... A note. A following number `1`, `2`, `4`, `8` and `16` means the length of the note's duration
   where `1` is a whole note, `2` a half, `4` a quarter and so on.
   A number followed by a period specifies a dotted note.
-  If no number appended, a default length specified by `L` command is used.
+  If no number appended, a default length specified by `L` command is applied.
 
 - `R` ... A rest. It also has the length as a note does.
 
