@@ -236,12 +236,9 @@ The bit-pattern literal generates a sequence of byte-sized data like follows:
 A string preceded by "`m`" or "`M`" is an MML literal that contain a sequence of MML data.
 It will be parsed and converted to JR-200 music data.
 
-- `A`-`G` ... A note. A following number `1`, `2`, `4`, `8` and `16` means the length of the note's duration
-  where `1` is a whole note, `2` a half, `4` a quarter and so on.
-  A number followed by a period specifies a dotted note.
-  If no number appended, a default length specified by `L` command is applied.
+- `A`-`G` ... A note.
 
-- `R` ... A rest. It also has the length as a note does.
+- `R` ... A rest.
 
 - `O` ... Specifies octave with a number from `1` to `5`. 
 
@@ -252,6 +249,11 @@ It will be parsed and converted to JR-200 music data.
 - `;` ... Specifies an end mark of the MML sequence.
 
 - `L` ... Specifies the default length.
+
+A note and rest can be followed by numbers `1`, `2`, `4`, `8` and `16` that mean the length of the duration
+where `1` is a whole, `2` a half, `4` a quarter and so on.
+A number followed by a period specifies a dotted note.
+If no number specified, a default length specified by `L` command is applied.
 
 MML sequences are joined together until an end mark appears even if they are described in separate lines.
 
