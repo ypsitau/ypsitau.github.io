@@ -237,7 +237,7 @@ A string preceded by "`m`" or "`M`" is an MML literal that contain a sequence of
 It will be parsed and converted to JR-200 music data.
 
 - `A`-`G` ... A note. A following number `1`, `2`, `4`, `8` and `16` means the length of the note's duration
-  where `1` is a whole note, `2` is a half, `4` is a quarter and so on.
+  where `1` is a whole note, `2` a half, `4` a quarter and so on.
   A number followed by a period specifies a dotted note.
   If no number appended, a default length specified by `L` command is used.
 
