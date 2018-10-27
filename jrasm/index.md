@@ -258,7 +258,7 @@ MML sequences are joined together even if they are described in separate lines u
 Example:
 ```
         .db     m"CDEFGAB >CDEFGAB"
-		.db     m"C4C8R4;"
+        .db     m"C4C8R4;"
 ```
 
 
