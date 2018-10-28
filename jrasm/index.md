@@ -236,7 +236,7 @@ The bit-pattern literal generates a sequence of byte-sized data like follows:
 A string preceded by "`m`" or "`M`" is an MML literal that contain a sequence of MML data.
 It will be parsed and converted to JR-200 music data.
 
-- `A`-`G` ... A note.
+- `A`-`G` ... A note. Appending a character `#` or `+` makes a sharped note and `-` makes a flatted one.
 
 - `R` ... A rest.
 
@@ -260,7 +260,12 @@ MML sequences are joined together until an end mark appears even if they are des
 Example:
 ```
         .db     m"CDEFGAB >CDEFGAB"
-        .db     m"C4C8R4;"
+        .db     m"C4"   ; a quarter note of C
+        .db     m"C8"   ; an eighth note of C
+        .db     m"R4"   ; a quarter rest
+        .db     m"C+4"  ; a quarter note of C sharp
+        .db     m"C-4"  ; a quarter note of C flat
+        .db     m"CDE;" ; all the MML sequences are joined until a semicolon
 ```
 
 
