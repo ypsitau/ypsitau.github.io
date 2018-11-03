@@ -1,5 +1,5 @@
 ---
-layout: jrasm-basement
+layout: jrasm-nonavi
 title: jrasm - Assembler for JR-200
 tracking_id: UA-38761061-3
 ---

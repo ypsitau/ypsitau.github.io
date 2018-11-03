@@ -1,6 +1,6 @@
 ---
-layout: jrasm-basement
-title: jrasm - Assembler for JR-200
+layout: jrasm-widenavi
+title: jrasm User's Manual
 tracking_id: UA-38761061-3
 ---
 # User's Manual
