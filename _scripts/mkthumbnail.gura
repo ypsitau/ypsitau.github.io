@@ -1,0 +1,6 @@
+#!/usr/bin/env gura
+import(png)
+import(show)
+
+img = image(sys.argv[1])
+img.crop(1, 51, 640, 448).resize(200).write('thumbnail.png')

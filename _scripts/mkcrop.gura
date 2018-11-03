@@ -1,0 +1,9 @@
+#!/usr/bin/env gura
+import(png)
+import(show)
+
+fileNameSrc = sys.argv[1]
+fileNameDst = path.basename(fileNameSrc) + '-crop.' + path.extname(fileNameSrc)
+img = image(fileNameSrc)
+img.crop(1, 51, 640, 448).resize(320).write(fileNameDst)
+println(fileNameDst, ' was created')
