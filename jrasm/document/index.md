@@ -303,7 +303,7 @@ A macro can set a default value for each parameter by specifying the parameter f
 If the number of parameters passed to the macro is less than required
 or parameters are declared blank by being specified by a series of commas, the default values are used instead.
 ```
-macro1  .MACRO arg1=0x11, arg2=0x22, arg3=0x33, arg4=0x44
+macro1: .MACRO arg1=0x11, arg2=0x22, arg3=0x33, arg4=0x44
         .DB     arg1, arg2, arg3, arg4
         .END
 
