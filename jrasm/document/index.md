@@ -80,10 +80,10 @@ The format of number literal is as follows:
 
 A sybmol literal consists of a series of characters and is used for following purposes:
 
-- Label.
-- Instruction's operation code.
-- Directive's name.
-- Register name.
+- Label
+- Instruction's operation code
+- Directive's name
+- Register name
 
 A symbol is case insensitive.
 This means that you can describe an instruction `LDAA` with a symbol `LDAA`, `ldaa`, `Ldaa`, `LdAA` and so on.
@@ -165,7 +165,7 @@ You can use the following operators in operands:
 |`&`     |Bitwise AND.                                                       |
 |`|`     |Bitwise OR.                                                        |
 |`^`     |Bitwise XOR.                                                       |
-|`<+>`   |Adds value in a bracket or brace. e.g. `[0x1320] <+> 8` makes `[0x1328]`, and `[x+0x23] <+> 5` makes `[x+0x28]`.|
+|`<+>`   |Adds value in a bracket or brace. e.g. `[0x1320] <+> 8` makes `[0x1328]`, `[x+0x23] <+> 5` makes `[x+0x28]`.|
 |`<<`    |Bit shift to left.                                                 |
 |`>>`    |Bit shift to right.                                                |
 
@@ -256,6 +256,13 @@ If the specified file is not found in the current directory, it is searched in t
 - A directory `inc` right under where `jrasm.exe` exists.
 - Directories specified in the environment variable `JRASMPATH`, which are joined together with a semicolon character.
 
+If the same file is already included, the second attempt to include it will be ignored. If you want to include the same file more than once, append an exclamation mark at the beginning of the file name.
+
+```
+        .INCLUDE "something.inc"
+        .INCLUDE "!something.inc"
+        .INCLUDE "!something.inc"
+```
 
 ### .MACRO
 
