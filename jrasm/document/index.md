@@ -39,9 +39,9 @@ is parsed as a line comment.
 You can also use a block comment by surrounding texts with `/*` and `*/`, which can contain multiple lines.
 
 ```
-; line comment
+        ; line comment
 
-// another line comment
+        // another line comment
         
         ldaa    32    ; line comment
 
