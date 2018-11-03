@@ -6,7 +6,7 @@ tracking_id: UA-38761061-3
 # User's Manual
 
 
-## Command Line<a name="command-line"></a>
+<h2>Command Line<a name="command-line"></a></h2>
 
 The execution format of `jrasm` is:
 
@@ -31,7 +31,7 @@ Available options are:
 |`--help`            |`-h`        |Prints help message.                                               |
 
 
-## Comment<a name="comment"></a>
+<h2>Comment<a name="comment"></a></h2>
 
 When a semicolon `;` or a pair of slash characters `//` appears, the following text until the end of the line
 is parsed as a line comment.
@@ -54,7 +54,7 @@ You can also use a block comment by surrounding texts with `/*` and `*/`, which 
 ```
 
 
-## Literal<a name="literal"></a>
+<h2>Literal<a name="literal"></a></h2>
 
 ### String
 
@@ -152,7 +152,7 @@ Example:
 ```
 
 
-## Operator<a name="operator"></a>
+<h2>Operator<a name="operator"></a></h2>
 
 You can use the following operators in operands:
 
@@ -170,7 +170,7 @@ You can use the following operators in operands:
 |`>>`    |Bit shift to right.                                                |
 
 
-## Directive<a name="directive"></a>
+<h2>Directive<a name="directive"></a></h2>
 
 The jrasm assembler supports following directives:
 
@@ -560,7 +560,7 @@ In this case, symbols `struct1.posx`, `struct1.posy`, `struct1.score` and `struc
 It also creates a symbol that joins a character `@` and the structure name and assigns the structure's size to it. In the example above, a symbol `@struct1` assigned with `5` is created.
 
 
-## Instruction<a name="instruction"></a>
+<h2>Instruction<a name="instruction"></a></h2>
 
 Here is a list of the assembler's syntax for M6800 instructions.
 
