@@ -23,6 +23,7 @@ tracking_id: UA-38761061-3
   </div>
 </div>
 
+
 ## What's This?
 
 This is an assembler of Motorola 6800 MPU, an 8bit CPU designed by Motorola in 1974.
@@ -44,14 +45,13 @@ It has been tested in Windows 10 64bit.
 Consider the following source file named `helloworld.asm`:
 
 ```
-        .ORG    0x2000
+        .ORG    0x1000
 loop:
         LDX     [ptr_src]
         LDAA    [X]
+        BEQ     done
         INX
         STX     [ptr_src]
-        CMPA    0x00
-        BEQ     done
         LDX     [ptr_dst]
         STAA    [X]
         INX
@@ -79,7 +79,7 @@ or convert it into a WAV file that is fed to a real machine through a cassette r
 After loading it, you can call the program using JR-200 BASIC like follows:
 
 ```
-U=USR($2000)
+U=USR($1000)
 ```
 
 You see "Hello, world!" on the screen? Congratulations!
@@ -94,32 +94,32 @@ to the standard output.
 The result is:
 
 ```
+                   .ORG 0x1000
 loop:
-    2000 FE 20 19  LDX  [ptr_src]
-    2003 A6 00     LDAA [X]
-    2005 08        INX  
-    2006 FF 20 19  STX  [ptr_src]
-    2009 81 00     CMPA 0x00
-    200B 27 0B     BEQ  done
-    200D FE 20 1B  LDX  [ptr_dst]
-    2010 A7 00     STAA [X]
-    2012 08        INX  
-    2013 FF 20 1B  STX  [ptr_dst]
-    2016 20 E8     BRA  loop
+    1000 FE 10 17  LDX  [ptr_src]
+    1003 A6 00     LDAA [X]
+    1005 27 0F     BEQ  done
+    1007 08        INX 
+    1008 FF 10 17  STX  [ptr_src]
+    100B FE 10 19  LDX  [ptr_dst]
+    100E A7 00     STAA [X]
+    1010 08        INX 
+    1011 FF 10 19  STX  [ptr_dst]
+    1014 20 EA     BRA  loop
 done:
-    2018 39        RTS  
+    1016 39        RTS 
 ptr_src:
-    2019 20 1D     .DW hello_world
+    1017 10 1B     .DW  hello_world
 ptr_dst:
-    201B C3 89     .DW 0xC100+0x09+0x14*0x20
+    1019 C3 89     .DW  0xc100+9+20*0x20
 hello_world:
-    201D 48 65     .DB "Hello, world!",0x00
-    201F 6C 6C     
-    2021 6F 2C     
-    2023 20 77     
-    2025 6F 72     
-    2027 6C 64     
-    2029 21 00  
+    101B 48 65     .DB  "Hello, world!",0
+    101D 6C 6C   
+    101F 6F 2C   
+    1021 20 77   
+    1023 6F 72   
+    1025 6C 64   
+    1027 21 00   
 ```
 
 
@@ -263,8 +263,8 @@ Example:
         .db     m"C4"   ; a quarter note of C
         .db     m"C8"   ; an eighth note of C
         .db     m"R4"   ; a quarter rest
-        .db     m"C+4"  ; a quarter note of C sharp
-        .db     m"C-4"  ; a quarter note of C flat
+        .db     m"D+4"  ; a quarter note of D sharp
+        .db     m"D-4"  ; a quarter note of D flat
         .db     m"CDE;" ; all the MML sequences are joined until a semicolon
 ```
 
@@ -292,7 +292,7 @@ You can use the following operators in operands:
 The jrasm assembler supports following directives:
 
 
-### .CSEG and .DSEG
+### .CSEG, .DSEG and .WSEG
 
 The directives `.CSEG` and `.DSEG` declare the beginning of code and data segment respectively.
 They don't put any restriction on what items are place in: you can write data sequence using directive `.DB`
@@ -311,11 +311,15 @@ Hello:  .DB     "Hello"
         ; ... any jobs ...
 ```
 
-The code segment is selected before any `.CSEG` or `.DSEG` directive appears.
+The directive `.WSEG` specifies the start of work segment that is used
+to allocate uninitialized memory are. It can not contain any instruction codes and directives that generate data
+including `.DB` and `.DW`. It is basically supposed that you declare labels and `.DS` directives in it.
+
+The code segment is selected before any of `.CSEG`, `.DSEG` or `.WSEG` directive appears.
 
 You have to specify at least one `.ORG` directive in the first code segment.
-The original address of the data segment is set right after the end of the code segment
-unless you explicitly specify `.ORG` directive for it.
+The address of the data and work segment starts right after the code segment in ths order
+unless their start adddress is explicitly specified by `.ORG` directive.
 
 
 ### .DB, .DW and .DS
@@ -363,6 +367,11 @@ Directive `.INCLUDE` takes in the content of another source file whose name is s
         .INCLUDE "something.inc"
         .INCLUDE "src/another.inc"
 ```
+
+If the specified file is not found in the current directory, it is searched in the following paths:
+
+- A directory `inc` right under where `jrasm.exe` exists.
+- Directories specified in the environment variable `JRASMPATH`, which are joined together with a semicolon character.
 
 
 ### .MACRO
