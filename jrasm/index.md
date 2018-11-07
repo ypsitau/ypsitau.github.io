@@ -3,7 +3,7 @@ layout: jrasm-nonavi
 title: jrasm - Assembler for JR-200
 tracking_id: UA-38761061-3
 ---
-{% assign jrasm_version = '1.0.0' %}
+{% assign jrasm_version = '1.0.1' %}
 
 <div class="jumbotron">
   <div class="container-fluid">
