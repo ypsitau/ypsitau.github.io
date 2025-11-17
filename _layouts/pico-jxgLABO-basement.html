@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+  <head>
+	{% if page.tracking_id %}
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id={{ page.tracking_id }}"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+	  
+	  gtag('config', '{{ page.tracking_id }}');
+	</script>
+	{% endif %}
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+	<!-- Font Awesome CSS -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+	<!-- Private Style Sheet -->
+	<link rel="stylesheet" href="/assets/jrasm-template.css">
+	<style type="text/css">
+	</style>
+	<title>{{ page.title }}</title>
+  </head>
+  <body>
+	<nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
+	  <a class="navbar-brand" href="/jrasm/">jrasm</a>
+	  <div class="collapse navbar-collapse">
+		<ul class="navbar-nav mr-auto">
+		  <li class="nav-item{% if page.url == "/jrasm/" %} active{% endif %}">
+			<a class="nav-link" href="/jrasm/">
+			  <i class="fas fa-home"></i> Home
+			</a>
+		  </li>
+		  <li class="nav-item">
+			<a class="nav-link{% if page.url contains "/jrasm/document/" %} active{% endif %}" href="/jrasm/document/">
+			  <i class="fas fa-book"></i> Document
+			</a>
+		  </li>
+		  <li class="nav-item">
+			<a class="nav-link{% if page.url contains "/jrasm/sample/" %} active{% endif %}" href="/jrasm/sample/">
+			  <i class="fas fa-code"></i> Sample
+			</a>
+		  </li>
+		</ul>
+	  </div>
+	  {% if page.layout contains "doc-" %}
+	  <div class="navbar-text navbar-left text-white bg-secondary rounded pr-4 pl-4">
+		{{ page.title }}
+	  </div>
+	  {% endif %}
+	  {% if page.prevpage %}
+	  {% if page.prevpage == "" %}
+	  <span class="btn btn-secondary disabled ml-3" href="{{ page.prevpage }}">
+		<i class="fas fa-chevron-circle-left mr-2"></i><span class="small">Prev</span>
+	  </span>
+	  {% else %}
+	  <a class="btn btn-secondary active ml-3" href="{{ page.prevpage }}">
+		<i class="fas fa-chevron-circle-left mr-2"></i><span class="small">Prev</span>
+	  </a>
+	  {% endif %}
+	  {% endif %}
+
+	  {% if page.nextpage %}
+	  {% if page.nextpage == "" %}
+	  <span class="btn btn-secondary disabled ml-2" href="{{ page.nextpage }}">
+		<span class="small">Next</span><i class="fas fa-chevron-circle-right ml-2"></i>
+	  </span>
+	  {% else %}
+	  <a class="btn btn-secondary active ml-2" href="{{ page.nextpage }}">
+		<span class="small">Next</span><i class="fas fa-chevron-circle-right ml-2"></i>
+	  </a>
+	  {% endif %}
+	  {% endif %}
+	</nav>
+	{{ content }}
+  </body>
+</html>
