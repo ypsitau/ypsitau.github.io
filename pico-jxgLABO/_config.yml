@@ -1,0 +1,28 @@
+title: pico-jxgLABO
+description: A command-line interface for Raspberry Pi Pico to control GPIO, ADC, PWM, I2C, and SPI functionalities
+remote_theme: pages-themes/cayman@v0.2.0
+plugins:
+  - jekyll-remote-theme
+baseurl: "/pico-jxgLABO"
+url: "https://ypsitau.github.io"
+
+# Exclude directories from Jekyll build
+exclude:
+  - build-pico
+  - build-pico-w
+  - build-pico2
+  - build-pico2-w
+  - pico-jxglib
+  - src
+  - script
+  - release
+  - .vscode
+  - .git
+  - .github
+  - .gitignore
+  - .gitmodules
+  - .jekyll-cache
+  - CMakeLists.txt
+  - pico_sdk_import.cmake
+  - build-for-release.ps1
+  - release-to-github.ps1
