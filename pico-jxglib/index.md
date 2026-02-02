@@ -20,19 +20,18 @@ title: pico-jxglib
 
 This article explains an overview and how to introduce **pico-jxglib**. For details on the features provided by the library, please refer to the following articles:
 
-▶️ [pico-jxglib and TFT LCD](https://zenn.dev/ypsitau/articles/2025-01-27-tft-lcd)
-▶️ [pico-jxglib and TFT LCD (continued)](https://zenn.dev/ypsitau/articles/2025-01-31-tft-lcd-cont)
-▶️ [pico-jxglib and LVGL](https://zenn.dev/ypsitau/articles/2025-02-04-lvgl)
-▶️ [pico-jxglib and Terminal](https://zenn.dev/ypsitau/articles/2025-02-19-terminal)
-▶️ [Connecting USB Keyboard/Mouse to Pico Board with pico-jxglib](https://zenn.dev/ypsitau/articles/2025-04-02-usbhost-keyboard-mouse)
-▶️ [pico-jxglib and Command Line Editor](https://zenn.dev/ypsitau/articles/2025-04-06-cmdline-editor)
-▶️ [Connecting USB Gamepad to Pico Board and Enjoying Games with pico-jxglib](https://zenn.dev/ypsitau/articles/2025-04-23-usbhost-gamepad)
-▶️ [Implementing a Shell on Pico Board with pico-jxglib](https://zenn.dev/ypsitau/articles/2025-05-08-shell)
-▶️ [Implementing a File System on Pico Board and Fully Utilizing Flash Memory with pico-jxglib](https://zenn.dev/ypsitau/articles/2025-05-31-fs-flash)
-▶️ [Connecting SD Card or USB Storage to Pico Board with pico-jxglib](https://zenn.dev/ypsitau/articles/2025-06-06-fs-media)
-▶️ [Operating File System with Shell in pico-jxglib (Easy Input with Auto-completion and History)](https://zenn.dev/ypsitau/articles/2025-06-09-fs-shell)
-▶️ [Connecting RTC to Pico Board and Recording Timestamps in File System with pico-jxglib](https://zenn.dev/ypsitau/articles/2025-06-22-rtc)
-
+▶️ [pico-jxglib and TFT LCD](https://zenn.dev/ypsitau/articles/2025-01-27-tft-lcd)<br />
+▶️ [pico-jxglib and TFT LCD (continued)](https://zenn.dev/ypsitau/articles/2025-01-31-tft-lcd-cont)<br />
+▶️ [pico-jxglib and LVGL](https://zenn.dev/ypsitau/articles/2025-02-04-lvgl)<br />
+▶️ [pico-jxglib and Terminal](https://zenn.dev/ypsitau/articles/2025-02-19-terminal)<br />
+▶️ [Connecting USB Keyboard/Mouse to Pico Board with pico-jxglib](https://zenn.dev/ypsitau/articles/2025-04-02-usbhost-keyboard-mouse)<br />
+▶️ [pico-jxglib and Command Line Editor](https://zenn.dev/ypsitau/articles/2025-04-06-cmdline-editor)<br />
+▶️ [Connecting USB Gamepad to Pico Board and Enjoying Games with pico-jxglib](https://zenn.dev/ypsitau/articles/2025-04-23-usbhost-gamepad)<br />
+▶️ [Implementing a Shell on Pico Board with pico-jxglib](https://zenn.dev/ypsitau/articles/2025-05-08-shell)<br />
+▶️ [Implementing a File System on Pico Board and Fully Utilizing Flash Memory with pico-jxglib](https://zenn.dev/ypsitau/articles/2025-05-31-fs-flash)<br />
+▶️ [Connecting SD Card or USB Storage to Pico Board with pico-jxglib](https://zenn.dev/ypsitau/articles/2025-06-06-fs-media)<br />
+▶️ [Operating File System with Shell in pico-jxglib (Easy Input with Auto-completion and History)](https://zenn.dev/ypsitau/articles/2025-06-09-fs-shell)<br />
+▶️ [Connecting RTC to Pico Board and Recording Timestamps in File System with pico-jxglib](https://zenn.dev/ypsitau/articles/2025-06-22-rtc)<br />
 ## Motivation
 
 I want to make a robot. Not something too grand, but something that moves around a room with a camera and sensors, powered by motors.
