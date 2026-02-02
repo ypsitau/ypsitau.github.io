@@ -12,13 +12,14 @@ title: pico-jxglib
       </span>
     </h1>
     <p class="lead">
+    A library that supports Pico SDK programming for the single-board microcontroller Raspberry Pi Pico
     </p>
   </div>
 </div>
 
-**pico-jxglib** is a library that supports Pico SDK programming for the single-board microcontroller Raspberry Pi Pico.
+## Detailed Articles
 
-This article explains an overview and how to introduce **pico-jxglib**. For details on the features provided by the library, please refer to the following articles:
+Please refer to the following articles for detailed usage of **pico-jxglib**:
 
 ▶️ [pico-jxglib and TFT LCD](https://zenn.dev/ypsitau/articles/2025-01-27-tft-lcd)<br />
 ▶️ [pico-jxglib and TFT LCD (continued)](https://zenn.dev/ypsitau/articles/2025-01-31-tft-lcd-cont)<br />
@@ -32,6 +33,7 @@ This article explains an overview and how to introduce **pico-jxglib**. For deta
 ▶️ [Connecting SD Card or USB Storage to Pico Board with pico-jxglib](https://zenn.dev/ypsitau/articles/2025-06-06-fs-media)<br />
 ▶️ [Operating File System with Shell in pico-jxglib (Easy Input with Auto-completion and History)](https://zenn.dev/ypsitau/articles/2025-06-09-fs-shell)<br />
 ▶️ [Connecting RTC to Pico Board and Recording Timestamps in File System with pico-jxglib](https://zenn.dev/ypsitau/articles/2025-06-22-rtc)<br />
+
 ## Motivation
 
 I want to make a robot. Not something too grand, but something that moves around a room with a camera and sensors, powered by motors.
