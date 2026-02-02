@@ -2,8 +2,20 @@
 layout: pico-jxgLABO-nonavi
 title: pico-jxgLABO
 ---
-
-# Pico Board is a Laboratory! Introducing pico-jxgLABO and Trying Out Logic Analyzer Functions
+<div class="jumbotron">
+  <div class="container-fluid">
+    <h1 class="display-4">pico-jxgLABO
+      <span class="float-right">
+        <a class="btn btn-secondary" href="https://github.com/ypsitau/pico-jxgLABO">
+          <i class="fab fa-github mr-2"></i>View on GitHub
+        </a>
+      </span>
+    </h1>
+    <p class="lead">
+    Pico Board is a Laboratory! Introducing pico-jxgLABO and Trying Out Logic Analyzer Functions
+    </p>
+  </div>
+</div>
 
 The Raspberry Pi Pico is a small and affordable (~$6) microcontroller board provided by Raspberry Pi Ltd. The original Pico features a 125MHz 32-bit ARM dual-core processor, 264KB SRAM, and 2MB flash memory. The Pico 2 goes even further with a 150MHz dual-core CPU, 520KB SRAM, 4MB flash memory, and hardware floating-point support, making it an extremely high-performance microcontroller board.
 
